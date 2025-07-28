@@ -114,15 +114,15 @@ const BrowseCourses = () => {
       );
     }
 
-    if (selectedCategory) {
+    if (selectedCategory && selectedCategory !== "all") {
       filtered = filtered.filter(course => course.category === selectedCategory);
     }
 
-    if (selectedMode) {
+    if (selectedMode && selectedMode !== "all") {
       filtered = filtered.filter(course => course.mode === selectedMode);
     }
 
-    if (selectedInstitute) {
+    if (selectedInstitute && selectedInstitute !== "all") {
       filtered = filtered.filter(course => course.institute === selectedInstitute);
     }
 
@@ -156,9 +156,9 @@ const BrowseCourses = () => {
 
   const clearFilters = () => {
     setSearchTerm("");
-    setSelectedCategory("");
-    setSelectedMode("");
-    setSelectedInstitute("");
+    setSelectedCategory("all");
+    setSelectedMode("all");
+    setSelectedInstitute("all");
     setFilteredCourses(courses);
   };
 
@@ -196,7 +196,7 @@ const BrowseCourses = () => {
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Categories</SelectItem>
+                    <SelectItem value="all">All Categories</SelectItem>
                     {categories.map(category => (
                       <SelectItem key={category} value={category}>{category}</SelectItem>
                     ))}
@@ -208,7 +208,7 @@ const BrowseCourses = () => {
                     <SelectValue placeholder="Mode" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Modes</SelectItem>
+                    <SelectItem value="all">All Modes</SelectItem>
                     <SelectItem value="online">Online</SelectItem>
                     <SelectItem value="offline">Offline</SelectItem>
                   </SelectContent>
@@ -219,7 +219,7 @@ const BrowseCourses = () => {
                     <SelectValue placeholder="Institute" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Institutes</SelectItem>
+                    <SelectItem value="all">All Institutes</SelectItem>
                     {institutes.map(institute => (
                       <SelectItem key={institute} value={institute}>{institute}</SelectItem>
                     ))}
@@ -227,7 +227,7 @@ const BrowseCourses = () => {
                 </Select>
               </div>
               
-              {(searchTerm || selectedCategory || selectedMode || selectedInstitute) && (
+              {(searchTerm || (selectedCategory && selectedCategory !== "all") || (selectedMode && selectedMode !== "all") || (selectedInstitute && selectedInstitute !== "all")) && (
                 <Button variant="outline" onClick={clearFilters} className="rounded-lg">
                   Clear Filters
                 </Button>
